@@ -1,6 +1,7 @@
 import "./App.css";
 import { YMaps, Map, Placemark, Clusterer } from "react-yandex-maps";
 import { useEffect, useState } from "react";
+import image from "./ds.svg";
 
 const allMarks = [
   {
@@ -38,7 +39,10 @@ const allMarks = [
   { coordinates: [54.444, 31.3533], options: { iconColor: "blue" } },
   {
     coordinates: [56.444, 35.15233],
-    properties: { iconContent: "Ч" },
+    properties: {
+      iconContent: "Ч",
+      balloonContent: '<div class="balloon">test</div>',
+    },
     options: { iconColor: "black" },
   },
   {
@@ -46,7 +50,7 @@ const allMarks = [
     properties: {
       iconContent: "К",
       hintContent: "Это хинт",
-      balloonContent:'<div class="balloon">custom balloon </div>',
+      balloonContent: '<div class="balloon">custom balloon </div>',
     },
     options: {
       iconColor: "red",
@@ -54,8 +58,21 @@ const allMarks = [
     },
   },
   { coordinates: [56, 43], options: { iconColor: "blue" } },
+  {
+    coordinates: [52.9951, 41.9623],
+    properties: {
+      hintContent: "Hint",
+      balloonContent: '<div class="balloon">test</div>',
+    },
+    options: {
+      iconLayout: "default#image",
+      iconColor: "red",
+      iconImageHref: image,
+      iconImageSize: [20, 20],
+      iconImageOffset: [-10, -10],
+    },
+  },
 ];
-
 function App() {
   const [marks, setMarks] = useState([]);
   const [filters, setFilters] = useState(["red", "green", "blue", "black"]);
@@ -70,20 +87,20 @@ function App() {
 
   useEffect(() => {
     setMarks(allMarks?.filter((i) => filters.includes(i.options.iconColor)));
-    console.log(allMarks?.filter((i) => filters.includes(i.options.iconColor)));
   }, [filters]);
 
   useEffect(() => {}, [marks]);
 
-  // const myMap = new YMaps()
-
-  // const balloon = new YMaps.Balloon(YMaps);
   return (
     <div className="App">
       <YMaps balloonContent="boba">
         <div>
           <Map
-            modules={["geoObject.addon.balloon", "geoObject.addon.hint"]}
+            modules={[
+              "geoObject.addon.balloon",
+              "geoObject.addon.hint",
+              "templateLayoutFactory",
+            ]}
             balloonContent="b"
             style={{ width: "800px", height: "800px" }}
             defaultState={{ center: [55.75, 37.57], zoom: 6 }}
@@ -139,9 +156,7 @@ function App() {
           />
           <label for="blue">Синие</label>
         </div>
-        <div >
-          Кастомный балун на красной метке в правом нижнем углу
-        </div>
+        <div>Кастомный балун на красной метке в правом нижнем углу</div>
       </div>
     </div>
   );

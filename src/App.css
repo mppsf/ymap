@@ -27,3 +27,16 @@
   height: 3px;
   background: red;
 }
+
+.ymaps-2-1-79-balloon__layout, .ymaps-2-1-79-balloon{
+  border-radius: 10px;
+}
+.ymaps-2-1-79-balloon{
+  border: 2px solid black;
+  box-shadow: none;
+}
+.ymaps-2-1-79-balloon__content{
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 10px;
+}
